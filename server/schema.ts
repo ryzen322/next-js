@@ -1,7 +1,7 @@
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, uuid } from "drizzle-orm/pg-core";
 
 export const post = pgTable("post", {
-  id: serial("id").primaryKey().notNull(),
+  id: uuid().defaultRandom().primaryKey(),
   name: text("name").notNull(),
   title: text("title").notNull(),
 });
