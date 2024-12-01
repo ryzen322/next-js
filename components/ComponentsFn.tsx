@@ -9,7 +9,11 @@ export async function ComponentsFn() {
       {data.length < 0 ? (
         <li>No data</li>
       ) : (
-        data.map((item) => <li key={item.id}>{item.title}</li>)
+        data.map((item) => (
+          <li key={item.id}>
+            {item.title} {item.name} {item.age}
+          </li>
+        ))
       )}
     </ul>
   );

@@ -16,6 +16,12 @@ const Form = () => {
         placeholder="Title"
         className="  text-gray-700 rounded-sm outline-none border border-black px-1"
       />
+      <input
+        type="number"
+        name="number"
+        placeholder="Number"
+        className="  text-gray-700 rounded-sm outline-none border border-black px-1"
+      />
       <Button type="submit" className=" bg-blue-400 ">
         Submit
       </Button>

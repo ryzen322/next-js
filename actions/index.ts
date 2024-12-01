@@ -10,8 +10,9 @@ export async function createPost(data: InsertPost) {
 export async function insertPostAction(formData: FormData) {
   const name = formData.get("name") as string;
   const title = formData.get("title") as string;
+  const age = Number(formData.get("number"));
 
-  await createPost({ name: name, title: title });
+  await createPost({ name: name, title: title, age });
 
   revalidatePath("/");
 }
