@@ -3,7 +3,7 @@ import { Button } from "./Button";
 
 const Form = () => {
   return (
-    <form className=" flex flex-col gap-2" action={insertPostAction}>
+    <form className=" flex flex-col gap-2 w-full" action={insertPostAction}>
       <input
         type="text"
         name="name"

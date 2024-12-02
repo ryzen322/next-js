@@ -1,11 +1,6 @@
 "use server";
-import { db } from "@/server/db";
-import { InsertPost, post } from "@/server/schema";
+import { createPost, deletePost } from "@/server/api";
 import { revalidatePath } from "next/cache";
-
-export async function createPost(data: InsertPost) {
-  await db.insert(post).values(data);
-}
 
 export async function insertPostAction(formData: FormData) {
   const name = formData.get("name") as string;
@@ -13,6 +8,12 @@ export async function insertPostAction(formData: FormData) {
   const age = Number(formData.get("number"));
 
   await createPost({ name: name, title: title, age });
+
+  revalidatePath("/");
+}
+
+export async function deletePostAction(id: number) {
+  deletePost(id);
 
   revalidatePath("/");
 }
