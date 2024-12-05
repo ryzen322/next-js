@@ -8,6 +8,8 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+
+// for authentication logic schema
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -42,6 +44,9 @@ export const accounts = pgTable(
   })
 );
 
+// end of authentication logic schema
+
+// posting data examples
 export const usersData = pgTable("usersData", {
   id: serial("id").primaryKey(),
   name: text("name"),

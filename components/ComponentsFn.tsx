@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { db } from "@/server/db";
 
 export async function ComponentsFn() {
@@ -13,6 +14,8 @@ export async function ComponentsFn() {
     },
   });
 
+  const user = await auth();
+  console.log(user);
   console.log(data);
 
   return <ul className=" flex flex-col gap-2 w-full"></ul>;
