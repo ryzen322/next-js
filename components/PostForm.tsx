@@ -1,15 +1,10 @@
 "use client";
-
 import { FormPostSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import React from "react";
-
 import { Button } from "./Button";
-
 import { useForm } from "react-hook-form";
-import { createPost } from "@/api/actions";
 import { z } from "zod";
+import { createPost } from "@/actions";
 
 const PostForm = ({ userEmail }: { userEmail: string }) => {
   const { register, handleSubmit } = useForm({
