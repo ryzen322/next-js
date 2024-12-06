@@ -60,7 +60,7 @@ export const posts = pgTable("posts", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  authorId: integer("author_id").references(() => usersData.id),
+  authorId: integer("author_id"),
 });
 
 // post relation to user userData: [post: {}]

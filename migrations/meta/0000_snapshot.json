@@ -1,5 +1,5 @@
 {
-  "id": "439d4cf7-9830-4510-9e71-9458231828fa",
+  "id": "0c561690-b29e-4799-91cb-5039c744e342",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -198,21 +198,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "posts_author_id_usersData_id_fk": {
-          "name": "posts_author_id_usersData_id_fk",
-          "tableFrom": "posts",
-          "tableTo": "usersData",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
