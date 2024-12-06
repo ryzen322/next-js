@@ -1,22 +1,19 @@
-import { auth } from "@/auth";
 import { db } from "@/server/db";
 
 export async function ComponentsFn() {
-  const data = await db.query.usersData.findFirst({
-    where: (usersData, { eq }) => eq(usersData.id, 1),
+  const posts = await db.query.posts.findMany({
     with: {
-      posts: {
-        with: {
-          comments: true,
-          author: true,
-        },
-      },
+      author: true,
+      comments: true,
     },
   });
 
-  const user = await auth();
-  console.log(user);
-  console.log(data);
+  // get the comment of a certain post using the post id
+  // const comment = await db.query.comments.findMany({
+  //   where: (comments, { eq }) => eq(comments.postId, posts.id),
+  // });
 
-  return <ul className=" flex flex-col gap-2 w-full"></ul>;
+  return (
+    <ul className=" flex flex-col gap-2 w-full">{JSON.stringify(posts)}</ul>
+  );
 }

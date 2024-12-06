@@ -58,8 +58,9 @@ export const posts = pgTable("posts", {
   content: text("content"),
   title: text("title"),
   name: text("name").notNull(),
+  email: text("email").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  authorId: integer("author_id"),
+  authorId: integer("author_id").references(() => usersData.id),
 });
 
 // post relation to user userData: [post: {}]
@@ -92,3 +93,5 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     references: [posts.id],
   }),
 }));
+
+export type InsertPost = typeof posts.$inferInsert;
