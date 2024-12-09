@@ -1,6 +1,6 @@
 {
-  "id": "c367cad7-b105-4fa5-ad07-8b51539cc6ca",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "5af1883d-5329-4275-bfa3-8676457c8949",
+  "prevId": "c367cad7-b105-4fa5-ad07-8b51539cc6ca",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -321,6 +321,12 @@
         "expires": {
           "name": "expires",
           "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }

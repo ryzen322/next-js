@@ -7,7 +7,14 @@ import { z } from "zod";
 import { createPost } from "@/actions";
 import { useCallback } from "react";
 
-const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
+const PostForm = ({
+  userEmail,
+  name,
+}: {
+  userEmail: string;
+  name: string;
+  id: string;
+}) => {
   const {
     register,
     handleSubmit,
@@ -49,10 +56,7 @@ const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
         }`}
       />
 
-      <ErrorInputMessage
-        message={errors.title?.message}
-        isMessage={errors.title?.message ? true : false}
-      />
+      <ErrorInputMessage message={errors.title?.message} />
       <input
         {...register("content")}
         placeholder="Context"
@@ -60,10 +64,7 @@ const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
           errors.content?.message ? " outline-red-400" : " outline-none"
         }`}
       />
-      <ErrorInputMessage
-        message={errors.content?.message}
-        isMessage={errors.content?.message ? true : false}
-      />
+      <ErrorInputMessage message={errors.content?.message} />
 
       <Button type="submit" className=" bg-blue-400 " disabled={isSubmitting}>
         {isSubmitting ? "Submiting..." : "Post"}
@@ -76,14 +77,10 @@ export default PostForm;
 
 export function ErrorInputMessage({
   message,
-  isMessage,
 }: {
   message: string | undefined;
-  isMessage: boolean;
 }) {
-  return (
-    <p className={` text-red-400 ${!isMessage ? " hidden" : " block"}`}>
-      {message}
-    </p>
-  );
+  if (!message) return null;
+
+  return <p className={` text-red-400 `}>{message}</p>;
 }

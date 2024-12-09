@@ -1,6 +1,8 @@
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
   serial,
@@ -8,6 +10,8 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+
+export const RoleEnum = pgEnum("role", ["user", "admin"]);
 
 // for authentication logic schema
 export const users = pgTable("user", {
@@ -18,6 +22,8 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  twoFactorEnabled: boolean("twoFactorEnabled").default(false),
+  role: RoleEnum("role").default("user"),
 });
 
 export const accounts = pgTable(
@@ -40,6 +46,22 @@ export const accounts = pgTable(
   (account) => ({
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
+    }),
+  })
+);
+export const verificationTokens = pgTable(
+  "verificationToken",
+  {
+    id: serial("id").notNull(),
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+    email: text("email").notNull(),
+  },
+
+  (verificationToken) => ({
+    compositePk: primaryKey({
+      columns: [verificationToken.identifier, verificationToken.token],
     }),
   })
 );

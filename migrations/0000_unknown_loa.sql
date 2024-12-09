@@ -1,3 +1,4 @@
+CREATE TYPE "public"."role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "account" (
 	"userId" text NOT NULL,
 	"type" text NOT NULL,
@@ -37,12 +38,22 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"email" text,
 	"emailVerified" timestamp,
 	"image" text,
+	"twoFactorEnabled" boolean DEFAULT false,
+	"role" "role" DEFAULT 'user',
 	CONSTRAINT "user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "usersData" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "verificationToken" (
+	"id" serial NOT NULL,
+	"identifier" text NOT NULL,
+	"token" text NOT NULL,
+	"expires" timestamp NOT NULL,
+	CONSTRAINT "verificationToken_identifier_token_pk" PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
 DO $$ BEGIN
