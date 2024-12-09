@@ -17,24 +17,23 @@ const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
     defaultValues: {
       title: "",
       content: "",
+      name,
+      email: userEmail,
     },
   });
 
-  console.log(errors);
-  console.log(isSubmitting);
-
   const postsSumbit = useCallback(
     async (formData: z.infer<typeof FormPostSchema>) => {
-      const { content, title } = formData;
+      const { content, title, email, name } = formData;
 
       try {
-        const data = await createPost(userEmail, name, { content, title });
+        const data = await createPost({ content, title, email, name });
         console.log(data);
       } catch (error) {
         console.log(error);
       }
     },
-    [userEmail, name]
+    []
   );
 
   return (
@@ -49,6 +48,7 @@ const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
           errors.title?.message ? " outline-red-400" : " outline-none"
         }`}
       />
+
       <ErrorInputMessage
         message={errors.title?.message}
         isMessage={errors.title?.message ? true : false}

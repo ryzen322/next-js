@@ -14,11 +14,7 @@ export const signOutAuth = async () => {
   await signOut();
 };
 
-export const createPost = async (
-  email: string,
-  name: string,
-  formData: z.infer<typeof FormPostSchema>
-) => {
+export const createPost = async (formData: z.infer<typeof FormPostSchema>) => {
   const postFormValidation = FormPostSchema.safeParse(formData);
   if (!postFormValidation.success) {
     return {
@@ -26,7 +22,7 @@ export const createPost = async (
     };
   }
   try {
-    const { content, title } = postFormValidation.data;
+    const { content, title, email, name } = postFormValidation.data;
 
     await db.insert(posts).values({ name, content, title, email });
 
