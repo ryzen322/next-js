@@ -5,55 +5,85 @@ import { Button } from "./Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createPost } from "@/actions";
+import { useCallback } from "react";
 
-const PostForm = ({ userEmail }: { userEmail: string }) => {
-  const { register, handleSubmit } = useForm({
+const PostForm = ({ userEmail, name }: { userEmail: string; name: string }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     resolver: zodResolver(FormPostSchema),
     defaultValues: {
-      name: "",
       title: "",
       content: "",
     },
   });
 
-  //   console.log(errors);
+  console.log(errors);
+  console.log(isSubmitting);
 
-  async function onSubmit(formData: z.infer<typeof FormPostSchema>) {
-    const { name, content, title } = formData;
+  const postsSumbit = useCallback(
+    async (formData: z.infer<typeof FormPostSchema>) => {
+      const { content, title } = formData;
 
-    try {
-      const data = createPost(userEmail, { name, content, title });
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+      try {
+        const data = await createPost(userEmail, name, { content, title });
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [userEmail, name]
+  );
 
   return (
     <form
       className=" flex flex-col gap-2 w-full"
-      //   action={createPost.bind(null, userEmail)}
-      //   action={(data: FormData) => {
-      //     const formdata = {
-      //       name: data.get("name") as string,
-      //       title: data.get("title") as string,
-      //       content: data.get("title") as string,
-      //     };
-
-      //     createPost(userEmail, formdata);
-      //   }}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(postsSumbit)}
     >
-      <input {...register("name")} placeholder="Name" />
-      <input {...register("title")} placeholder="Title" />
+      <input
+        {...register("title")}
+        placeholder="Title"
+        className={` ${
+          errors.title?.message ? " outline-red-400" : " outline-none"
+        }`}
+      />
+      <ErrorInputMessage
+        message={errors.title?.message}
+        isMessage={errors.title?.message ? true : false}
+      />
+      <input
+        {...register("content")}
+        placeholder="Context"
+        className={` ${
+          errors.content?.message ? " outline-red-400" : " outline-none"
+        }`}
+      />
+      <ErrorInputMessage
+        message={errors.content?.message}
+        isMessage={errors.content?.message ? true : false}
+      />
 
-      <input {...register("content")} placeholder="Context" />
-
-      <Button type="submit" className=" bg-blue-400 ">
-        Submit
+      <Button type="submit" className=" bg-blue-400 " disabled={isSubmitting}>
+        {isSubmitting ? "Submiting..." : "Post"}
       </Button>
     </form>
   );
 };
 
 export default PostForm;
+
+export function ErrorInputMessage({
+  message,
+  isMessage,
+}: {
+  message: string | undefined;
+  isMessage: boolean;
+}) {
+  return (
+    <p className={` text-red-400 ${!isMessage ? " hidden" : " block"}`}>
+      {message}
+    </p>
+  );
+}

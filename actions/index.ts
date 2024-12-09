@@ -16,6 +16,7 @@ export const signOutAuth = async () => {
 
 export const createPost = async (
   email: string,
+  name: string,
   formData: z.infer<typeof FormPostSchema>
 ) => {
   const postFormValidation = FormPostSchema.safeParse(formData);
@@ -25,11 +26,12 @@ export const createPost = async (
     };
   }
   try {
-    const { content, name, title } = postFormValidation.data;
+    const { content, title } = postFormValidation.data;
 
     await db.insert(posts).values({ name, content, title, email });
 
     revalidatePath("/");
+    return { message: "succes fully added new data ", postFormValidation };
   } catch (error) {
     return { message: "Database Error: Failed to Delete Invoice", error };
   }
