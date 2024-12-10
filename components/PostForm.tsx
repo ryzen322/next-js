@@ -7,14 +7,7 @@ import { z } from "zod";
 import { createPost } from "@/actions";
 import { useCallback } from "react";
 
-const PostForm = ({
-  userEmail,
-  name,
-}: {
-  userEmail: string;
-  name: string;
-  id: string;
-}) => {
+const PostForm = () => {
   const {
     register,
     handleSubmit,
@@ -24,17 +17,15 @@ const PostForm = ({
     defaultValues: {
       title: "",
       content: "",
-      name,
-      email: userEmail,
     },
   });
 
   const postsSumbit = useCallback(
     async (formData: z.infer<typeof FormPostSchema>) => {
-      const { content, title, email, name } = formData;
+      const { content, title } = formData;
 
       try {
-        const data = await createPost({ content, title, email, name });
+        const data = await createPost({ content, title });
         console.log(data);
       } catch (error) {
         console.log(error);
