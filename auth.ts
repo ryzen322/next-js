@@ -16,6 +16,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
     }),
-    Google,
+    Google({
+      allowDangerousEmailAccountLinking: true,
+    }),
   ],
 });
