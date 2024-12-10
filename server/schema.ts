@@ -133,8 +133,31 @@ export const tweetComment = pgTable("tweet_comment", {
     .references(() => tweets.id, { onDelete: "cascade" }) // Foreign key reference to `tweet` table's `id`
     .notNull(),
   content: text("content"),
+  name: text("name"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const replyTweets = pgTable("reply_tweets", {
+  id: serial("id").primaryKey(),
+  commentId: serial("commentId") // Updated for clarity
+    .references(() => tweetComment.id, { onDelete: "cascade" })
+    .notNull(),
+  content: text("content"),
+  name: text("name"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const tweetsRelations = relations(tweets, ({ many }) => ({
+  comments: many(tweetComment),
+}));
+
+export const tweetCommentsRelations = relations(tweetComment, ({ one }) => ({
+  author: one(tweets, {
+    fields: [tweetComment.tweetId],
+    references: [tweets.id],
+  }),
+}));
+
+export type InsertTweet = typeof tweets.$inferInsert;
 export type InsertComment = typeof comments.$inferInsert;
 export type InsertPost = typeof posts.$inferInsert;

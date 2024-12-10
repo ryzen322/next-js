@@ -43,6 +43,13 @@
       "when": 1733822171117,
       "tag": "0005_concerned_senator_kelly",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1733826279846,
+      "tag": "0006_perfect_richard_fisk",
+      "breakpoints": true
     }
   ]
 }
