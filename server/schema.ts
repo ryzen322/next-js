@@ -137,6 +137,16 @@ export const tweetComment = pgTable("tweet_comment", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const tweetsRelations = relations(tweets, ({ many }) => ({
+  comments: many(tweetComment),
+}));
+
+export const tweetCommentsRelations = relations(tweetComment, ({ one }) => ({
+  author: one(tweets, {
+    fields: [tweetComment.tweetId],
+    references: [tweets.id],
+  }),
+}));
 export const replyTweets = pgTable("reply_tweets", {
   id: serial("id").primaryKey(),
   commentId: serial("commentId") // Updated for clarity
@@ -147,15 +157,19 @@ export const replyTweets = pgTable("reply_tweets", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
-export const tweetsRelations = relations(tweets, ({ many }) => ({
-  comments: many(tweetComment),
-}));
+// reply to comment tweets
+export const replyTweetsCommentRelations = relations(
+  replyTweets,
+  ({ one }) => ({
+    author: one(tweetComment, {
+      fields: [replyTweets.commentId], // Foreign key field
+      references: [tweetComment.id], // Primary key in `tweetComment`
+    }),
+  })
+);
 
-export const tweetCommentsRelations = relations(tweetComment, ({ one }) => ({
-  author: one(tweets, {
-    fields: [tweetComment.tweetId],
-    references: [tweets.id],
-  }),
+export const replyTweetsRelation = relations(tweetComment, ({ many }) => ({
+  reply: many(replyTweets),
 }));
 
 export type InsertTweet = typeof tweets.$inferInsert;
