@@ -32,7 +32,7 @@ export const ForYou = async () => {
               <p className=" text-xs">{item.content}</p>
               <div className=" flex items-center gap-5">
                 <Likes />
-                <Comment />
+                <Comment tweetId={item.id} />
                 <Retweet />
                 <Share />
               </div>
