@@ -19,6 +19,8 @@ export const createPost = async (formData: z.infer<typeof FormPostSchema>) => {
   const email = users?.user?.email as string;
   const name = users?.user?.name as string;
 
+  console.log(users);
+
   if (!users) return `Please login`;
 
   const postFormValidation = FormPostSchema.safeParse(formData);
@@ -45,6 +47,7 @@ export const createTweetPost = async (
   const users = await auth();
   const email = users?.user?.email as string;
   const name = users?.user?.name as string;
+  const image = users?.user?.image as string;
 
   if (!users) return `Please login`;
 
@@ -57,7 +60,7 @@ export const createTweetPost = async (
   try {
     const { content, title } = tweetFromValidation.data;
 
-    await db.insert(tweets).values({ content, title, name, email });
+    await db.insert(tweets).values({ content, title, name, email, image });
     revalidatePath("/tweet");
     return { message: "succes fully added new data ", tweetFromValidation };
   } catch (error) {

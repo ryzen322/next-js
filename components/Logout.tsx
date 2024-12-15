@@ -9,12 +9,12 @@ const Logout = () => {
       <Button type="submit" className=" bg-blue-400 ">
         Log out
       </Button>
-      <Link
+      {/* <Link
         href={"tweet"}
         className=" w-full  bg-blue-400 flex items-center justify-center"
       >
         To Tweet
-      </Link>
+      </Link> */}
     </form>
   );
 };

@@ -57,6 +57,13 @@
       "when": 1733832716328,
       "tag": "0007_volatile_fenris",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1734258039729,
+      "tag": "0008_green_vapor",
+      "breakpoints": true
     }
   ]
 }

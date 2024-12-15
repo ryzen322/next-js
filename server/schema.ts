@@ -124,6 +124,7 @@ export const tweets = pgTable("tweet", {
   title: text("title"),
   name: text("name").notNull(),
   email: text("email").notNull(),
+  image: text("image"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 

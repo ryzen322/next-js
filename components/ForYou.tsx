@@ -4,9 +4,12 @@ import Likes from "./svg/likes";
 import Comment from "./svg/comment";
 import Retweet from "./svg/retweet";
 import Share from "./svg/share";
+import { auth } from "@/auth";
 
 export const ForYou = async () => {
   const feed = await db.query.tweets.findMany();
+  const users = await auth();
+  console.log(users);
 
   return (
     <ul className=" w-full flex flex-col gap-2">
@@ -14,7 +17,7 @@ export const ForYou = async () => {
         <li key={item.id} className=" flex gap-3 p-4 border-b">
           <div className=" w-8 h-8 rounded-full overflow-hidden shrink-0">
             <Avatar className=" w-8 h-8 rounded-full">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={item.image ? item.image : undefined} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </div>
