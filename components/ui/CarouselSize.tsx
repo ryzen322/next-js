@@ -7,7 +7,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-const array = Array.from({ length: 5 });
+const array = Array.from({ length: 25 });
 
 export function CarouselSize() {
   return (
@@ -15,7 +15,7 @@ export function CarouselSize() {
       opts={{
         align: "start",
       }}
-      className="w-full max-w-sm"
+      className="w-full max-w-sm phone:max-w-[450px] sm:max-w-full"
     >
       <CarouselContent>
         {array.map((_, index) => (
