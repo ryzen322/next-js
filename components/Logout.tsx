@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "./Button";
 import { signOutAuth } from "@/actions";
-import Link from "next/link";
+// import Link from "next/link";
 
 const Logout = () => {
   return (
